@@ -2,6 +2,7 @@ package tests;
 
 import models.ReqresBodyLombokModel;
 import models.ReqresResponseLombokModel;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +14,11 @@ import static specs.ReqresSpec.reqresRequestSpec;
 import static specs.ReqresSpec.reqresResponseSpec;
 
 @Tag("opti_test")
+@DisplayName("Оптимизированные api тесты на запросы Reqres")
 public class ReqresOptimizedTest {
 
     @Test
+    @DisplayName("Проверка статус кода и валидности json при запросе пользователей")
     void singleUserCheckSchemeTest() {
 
         step("Check response for get request", () ->
@@ -29,6 +32,7 @@ public class ReqresOptimizedTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса на смену работы пользователя")
     void changeMorpheusJobTest(){
 
         ReqresBodyLombokModel reqresBody = new ReqresBodyLombokModel();
@@ -52,6 +56,7 @@ public class ReqresOptimizedTest {
     }
 
     @Test
+    @DisplayName("Проверка статус кода при запросе на удаление пользователя")
     void checkStatusCodeForDelete(){
 
         step("Check status code for delete request", () ->
@@ -64,6 +69,7 @@ public class ReqresOptimizedTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса на создание пользователя")
     void checkCreateUser(){
 
         ReqresBodyLombokModel reqresBody = new ReqresBodyLombokModel();
