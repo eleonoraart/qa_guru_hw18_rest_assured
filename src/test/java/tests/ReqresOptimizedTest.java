@@ -2,6 +2,7 @@ package tests;
 
 import models.ReqresBodyLombokModel;
 import models.ReqresResponseLombokModel;
+import models.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.ReqresSpec.reqresRequestSpec;
 import static specs.ReqresSpec.reqresResponseSpec;
 
@@ -90,5 +92,30 @@ public class ReqresOptimizedTest {
                 assertThat(response.getJob()).isEqualTo("QA automation"));
         step("Verify expected name", () ->
                 assertThat(response.getName()).isEqualTo("morpheus"));
+    }
+
+    @Test
+    @DisplayName("Проверка запроса на смену работы пользователя")
+    void changeJobTest(){
+
+        User user = new User();
+        user.setName("morpheus");
+        user.setJob("QA");
+
+        step("Make request for change job", () ->
+                given(reqresRequestSpec)
+                        .body(user)
+                        .when()
+                        .put("/users/2")
+                        .then()
+                        .spec(reqresResponseSpec)
+
+                        .statusCode(200)
+                        .extract().as(User.class));
+
+        // @formatter:on
+        step("Verify expected job", () ->
+                assertEquals("QA", user.getJob()));
+
     }
 }

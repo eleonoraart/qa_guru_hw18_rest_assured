@@ -1,42 +1,15 @@
 package tests;
 
-import models.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.ReqresSpec.reqresRequestSpec;
 import static specs.ReqresSpec.reqresResponseSpec;
 
 public class ReqresGroovyTests {
-
-    @Test
-    @DisplayName("Проверка запроса на смену работы пользователя")
-    void changeMorpheusJobTest(){
-
-        User user = new User();
-        user.setName("morpheus");
-        user.setJob("QA");
-
-        step("Make request for change job", () ->
-                        given(reqresRequestSpec)
-                            .body(user)
-                        .when()
-                            .put("/users/2")
-                        .then()
-                            .spec(reqresResponseSpec)
-
-                            .statusCode(200)
-                            .extract().as(User.class));
-
-        // @formatter:on
-        step("Verify expected job", () ->
-        assertEquals("QA", user.getJob()));
-
-    }
 
     @Test
     @DisplayName("Проверка значений атрибутов полученных цветов")
